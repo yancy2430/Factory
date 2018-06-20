@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.OrderProductProcessBaseMapper">
+
+
+    <insert id="insertOrderProductProcess" >
+        INSERT INTO `tb_order_product_process`
+        (
+        <trim suffixOverrides=",">
+                    <if test="orderId!=null">
+                        `order_id`,
+                    </if>
+                    <if test="productId!=null">
+                        `product_id`,
+                    </if>
+                    <if test="processNo!=null">
+                        `process_no`,
+                    </if>
+                    <if test="processId!=null">
+                        `process_id`,
+                    </if>
+                    <if test="processName!=null">
+                        `process_name`,
+                    </if>
+                    <if test="processPrice!=null">
+                        `process_price`,
+                    </if>
+                    <if test="ratio!=null">
+                        `ratio`,
+                    </if>
+                    <if test="cateId!=null">
+                        `cate_id`,
+                    </if>
+                    <if test="remarks!=null">
+                        `remarks`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="orderId!=null">
+                    #{orderId},
+                </if>
+                <if test="productId!=null">
+                    #{productId},
+                </if>
+                <if test="processNo!=null">
+                    #{processNo},
+                </if>
+                <if test="processId!=null">
+                    #{processId},
+                </if>
+                <if test="processName!=null">
+                    #{processName},
+                </if>
+                <if test="processPrice!=null">
+                    #{processPrice},
+                </if>
+                <if test="ratio!=null">
+                    #{ratio},
+                </if>
+                <if test="cateId!=null">
+                    #{cateId},
+                </if>
+                <if test="remarks!=null">
+                    #{remarks},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateOrderProductProcess">
+        UPDATE `tb_order_product_process`
+        SET
+        <trim suffixOverrides=",">
+            <if test="orderId != null">
+                `order_id` = #{orderId},
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId},
+            </if>
+            <if test="processNo != null and processNo!=''">
+                `process_no` = #{processNo},
+            </if>
+            <if test="processId != null">
+                `process_id` = #{processId},
+            </if>
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName},
+            </if>
+            <if test="processPrice != null">
+                `process_price` = #{processPrice},
+            </if>
+            <if test="ratio != null and ratio!=''">
+                `ratio` = #{ratio},
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId},
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.OrderProductProcess" id="OrderProductProcessMap">
+        <result property="orderId" column="order_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="processNo" column="process_no"/>
+        <result property="processId" column="process_id"/>
+        <result property="processName" column="process_name"/>
+        <result property="processPrice" column="process_price"/>
+        <result property="ratio" column="ratio"/>
+        <result property="cateId" column="cate_id"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+
+
+    <select id="queryOrderProductProcess" resultMap="OrderProductProcessMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_order_product_process`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderId != null">
+                `order_id` = #{orderId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="processNo != null and processNo!=''">
+                `process_no` = #{processNo} and
+            </if>
+            <if test="processId != null">
+                `process_id` = #{processId} and
+            </if>
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName} and
+            </if>
+            <if test="processPrice != null">
+                `process_price` = #{processPrice} and
+            </if>
+            <if test="ratio != null and ratio!=''">
+                `ratio` = #{ratio} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.OrderProductProcess$QueryBuilder) == true">
+                <if test="orderIdList != null">
+                    `order_id` in
+                    <foreach collection="orderIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="orderIdSt !=null">
+                    `order_id` >= #{orderIdSt} and
+                </if>
+                <if test="orderIdEd!=null">
+                    `order_id` &lt;= #{orderIdEd} and
+                </if>
+                <if test="productIdList != null">
+                    `product_id` in
+                    <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                <if test="processNoList != null">
+                    `process_no` in
+                    <foreach collection="processNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessNo!=null and fuzzyProcessNo.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessNo"  separator="or" item="item">
+                        `Process_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessNo!=null and rightFuzzyProcessNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessNo"  separator="or" item="item">
+                        `Process_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="processIdList != null">
+                    `process_id` in
+                    <foreach collection="processIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="processIdSt !=null">
+                    `process_id` >= #{processIdSt} and
+                </if>
+                <if test="processIdEd!=null">
+                    `process_id` &lt;= #{processIdEd} and
+                </if>
+                <if test="processNameList != null">
+                    `process_name` in
+                    <foreach collection="processNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProcessName!=null and fuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessName!=null and rightFuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="processPriceList != null">
+                    `process_price` in
+                    <foreach collection="processPriceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="processPriceSt !=null">
+                    `process_price` >= #{processPriceSt} and
+                </if>
+                <if test="processPriceEd!=null">
+                    `process_price` &lt;= #{processPriceEd} and
+                </if>
+                <if test="ratioList != null">
+                    `ratio` in
+                    <foreach collection="ratioList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRatio!=null and fuzzyRatio.size()>0">
+                    (
+                    <foreach collection="fuzzyRatio"  separator="or" item="item">
+                        `Ratio` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRatio!=null and rightFuzzyRatio.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRatio"  separator="or" item="item">
+                        `Ratio` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="cateIdList != null">
+                    `cate_id` in
+                    <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                <if test="remarksList != null">
+                    `remarks` in
+                    <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryOrderProductProcessLimit1" resultMap="OrderProductProcessMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_order_product_process`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="orderId != null">
+                `order_id` = #{orderId} and
+            </if>
+            <if test="productId != null">
+                `product_id` = #{productId} and
+            </if>
+            <if test="processNo != null and processNo!=''">
+                `process_no` = #{processNo} and
+            </if>
+            <if test="processId != null">
+                `process_id` = #{processId} and
+            </if>
+            <if test="processName != null and processName!=''">
+                `process_name` = #{processName} and
+            </if>
+            <if test="processPrice != null">
+                `process_price` = #{processPrice} and
+            </if>
+            <if test="ratio != null and ratio!=''">
+                `ratio` = #{ratio} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.OrderProductProcess$QueryBuilder) == true">
+                    <if test="orderIdList != null">
+                        `order_id` in
+                        <foreach collection="orderIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="orderIdSt !=null">
+                    `order_id` >= #{orderIdSt} and
+                </if>
+                <if test="orderIdEd!=null">
+                    `order_id` &lt;= #{orderIdEd} and
+                </if>
+                    <if test="productIdList != null">
+                        `product_id` in
+                        <foreach collection="productIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productIdSt !=null">
+                    `product_id` >= #{productIdSt} and
+                </if>
+                <if test="productIdEd!=null">
+                    `product_id` &lt;= #{productIdEd} and
+                </if>
+                    <if test="processNoList != null">
+                        `process_no` in
+                        <foreach collection="processNoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessNo!=null and fuzzyProcessNo.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessNo"  separator="or" item="item">
+                        `Process_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessNo!=null and rightFuzzyProcessNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessNo"  separator="or" item="item">
+                        `Process_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="processIdList != null">
+                        `process_id` in
+                        <foreach collection="processIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="processIdSt !=null">
+                    `process_id` >= #{processIdSt} and
+                </if>
+                <if test="processIdEd!=null">
+                    `process_id` &lt;= #{processIdEd} and
+                </if>
+                    <if test="processNameList != null">
+                        `process_name` in
+                        <foreach collection="processNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProcessName!=null and fuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="fuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProcessName!=null and rightFuzzyProcessName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProcessName"  separator="or" item="item">
+                        `Process_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="processPriceList != null">
+                        `process_price` in
+                        <foreach collection="processPriceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="processPriceSt !=null">
+                    `process_price` >= #{processPriceSt} and
+                </if>
+                <if test="processPriceEd!=null">
+                    `process_price` &lt;= #{processPriceEd} and
+                </if>
+                    <if test="ratioList != null">
+                        `ratio` in
+                        <foreach collection="ratioList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRatio!=null and fuzzyRatio.size()>0">
+                    (
+                    <foreach collection="fuzzyRatio"  separator="or" item="item">
+                        `Ratio` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRatio!=null and rightFuzzyRatio.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRatio"  separator="or" item="item">
+                        `Ratio` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="cateIdList != null">
+                        `cate_id` in
+                        <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                    <if test="remarksList != null">
+                        `remarks` in
+                        <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `order_id`,
+        `product_id`,
+        `process_no`,
+        `process_id`,
+        `process_name`,
+        `process_price`,
+        `ratio`,
+        `cate_id`,
+        `remarks`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.OrderProductProcess$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.orderId==true">
+                        `order_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productId==true">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processNo==true">
+                        `process_no`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processId==true">
+                        `process_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processName==true">
+                        `process_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.processPrice==true">
+                        `process_price`,
+                    </if>
+                    <if test="fetchFields.fetchFields.ratio==true">
+                        `ratio`,
+                    </if>
+                    <if test="fetchFields.fetchFields.cateId==true">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.remarks==true">
+                        `remarks`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.orderId==null">
+                        `order_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productId==null">
+                        `product_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processNo==null">
+                        `process_no`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processId==null">
+                        `process_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processName==null">
+                        `process_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.processPrice==null">
+                        `process_price`,
+                    </if>
+                    <if test="fetchFields.excludeFields.ratio==null">
+                        `ratio`,
+                    </if>
+                    <if test="fetchFields.excludeFields.cateId==null">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.remarks==null">
+                        `remarks`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.OrderProductProcess$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

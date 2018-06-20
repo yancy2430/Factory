@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.ModuleBaseMapper">
+
+
+    <insert id="insertModule"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_module`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="pid!=null">
+                        `pid`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="module!=null">
+                        `module`,
+                    </if>
+                    <if test="action!=null">
+                        `action`,
+                    </if>
+                    <if test="params!=null">
+                        `params`,
+                    </if>
+                    <if test="isMenu!=null">
+                        `is_menu`,
+                    </if>
+                    <if test="isCount!=null">
+                        `is_count`,
+                    </if>
+                    <if test="sort!=null">
+                        `sort`,
+                    </if>
+                    <if test="level!=null">
+                        `level`,
+                    </if>
+                    <if test="icon!=null">
+                        `icon`,
+                    </if>
+                    <if test="addtime!=null">
+                        `addtime`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="pid!=null">
+                    #{pid},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="module!=null">
+                    #{module},
+                </if>
+                <if test="action!=null">
+                    #{action},
+                </if>
+                <if test="params!=null">
+                    #{params},
+                </if>
+                <if test="isMenu!=null">
+                    #{isMenu},
+                </if>
+                <if test="isCount!=null">
+                    #{isCount},
+                </if>
+                <if test="sort!=null">
+                    #{sort},
+                </if>
+                <if test="level!=null">
+                    #{level},
+                </if>
+                <if test="icon!=null">
+                    #{icon},
+                </if>
+                <if test="addtime!=null">
+                    #{addtime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateModule">
+        UPDATE `tb_module`
+        SET
+        <trim suffixOverrides=",">
+            <if test="pid != null">
+                `pid` = #{pid},
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="module != null and module!=''">
+                `module` = #{module},
+            </if>
+            <if test="action != null and action!=''">
+                `action` = #{action},
+            </if>
+            <if test="params != null and params!=''">
+                `params` = #{params},
+            </if>
+            <if test="isMenu != null">
+                `is_menu` = #{isMenu},
+            </if>
+            <if test="isCount != null">
+                `is_count` = #{isCount},
+            </if>
+            <if test="sort != null">
+                `sort` = #{sort},
+            </if>
+            <if test="level != null">
+                `level` = #{level},
+            </if>
+            <if test="icon != null and icon!=''">
+                `icon` = #{icon},
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Module" id="ModuleMap">
+        <result property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="name" column="name"/>
+        <result property="module" column="module"/>
+        <result property="action" column="action"/>
+        <result property="params" column="params"/>
+        <result property="isMenu" column="is_menu"/>
+        <result property="isCount" column="is_count"/>
+        <result property="sort" column="sort"/>
+        <result property="level" column="level"/>
+        <result property="icon" column="icon"/>
+        <result property="addtime" column="addtime"/>
+    </resultMap>
+
+
+    <select id="queryModule" resultMap="ModuleMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_module`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="pid != null">
+                `pid` = #{pid} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="module != null and module!=''">
+                `module` = #{module} and
+            </if>
+            <if test="action != null and action!=''">
+                `action` = #{action} and
+            </if>
+            <if test="params != null and params!=''">
+                `params` = #{params} and
+            </if>
+            <if test="isMenu != null">
+                `is_menu` = #{isMenu} and
+            </if>
+            <if test="isCount != null">
+                `is_count` = #{isCount} and
+            </if>
+            <if test="sort != null">
+                `sort` = #{sort} and
+            </if>
+            <if test="level != null">
+                `level` = #{level} and
+            </if>
+            <if test="icon != null and icon!=''">
+                `icon` = #{icon} and
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Module$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="pidList != null">
+                    `pid` in
+                    <foreach collection="pidList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="pidSt !=null">
+                    `pid` >= #{pidSt} and
+                </if>
+                <if test="pidEd!=null">
+                    `pid` &lt;= #{pidEd} and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="moduleList != null">
+                    `module` in
+                    <foreach collection="moduleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyModule!=null and fuzzyModule.size()>0">
+                    (
+                    <foreach collection="fuzzyModule"  separator="or" item="item">
+                        `Module` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModule!=null and rightFuzzyModule.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModule"  separator="or" item="item">
+                        `Module` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="actionList != null">
+                    `action` in
+                    <foreach collection="actionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAction!=null and fuzzyAction.size()>0">
+                    (
+                    <foreach collection="fuzzyAction"  separator="or" item="item">
+                        `Action` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAction!=null and rightFuzzyAction.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAction"  separator="or" item="item">
+                        `Action` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="paramsList != null">
+                    `params` in
+                    <foreach collection="paramsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyParams!=null and fuzzyParams.size()>0">
+                    (
+                    <foreach collection="fuzzyParams"  separator="or" item="item">
+                        `Params` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyParams!=null and rightFuzzyParams.size()>0">
+                    (
+                    <foreach collection="rightFuzzyParams"  separator="or" item="item">
+                        `Params` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="isMenuList != null">
+                    `is_menu` in
+                    <foreach collection="isMenuList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="isMenuSt !=null">
+                    `is_menu` >= #{isMenuSt} and
+                </if>
+                <if test="isMenuEd!=null">
+                    `is_menu` &lt;= #{isMenuEd} and
+                </if>
+                <if test="isCountList != null">
+                    `is_count` in
+                    <foreach collection="isCountList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="isCountSt !=null">
+                    `is_count` >= #{isCountSt} and
+                </if>
+                <if test="isCountEd!=null">
+                    `is_count` &lt;= #{isCountEd} and
+                </if>
+                <if test="sortList != null">
+                    `sort` in
+                    <foreach collection="sortList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="sortSt !=null">
+                    `sort` >= #{sortSt} and
+                </if>
+                <if test="sortEd!=null">
+                    `sort` &lt;= #{sortEd} and
+                </if>
+                <if test="levelList != null">
+                    `level` in
+                    <foreach collection="levelList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="levelSt !=null">
+                    `level` >= #{levelSt} and
+                </if>
+                <if test="levelEd!=null">
+                    `level` &lt;= #{levelEd} and
+                </if>
+                <if test="iconList != null">
+                    `icon` in
+                    <foreach collection="iconList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyIcon!=null and fuzzyIcon.size()>0">
+                    (
+                    <foreach collection="fuzzyIcon"  separator="or" item="item">
+                        `Icon` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyIcon!=null and rightFuzzyIcon.size()>0">
+                    (
+                    <foreach collection="rightFuzzyIcon"  separator="or" item="item">
+                        `Icon` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="addtimeList != null">
+                    `addtime` in
+                    <foreach collection="addtimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="addtimeSt !=null">
+                    `addtime` >= #{addtimeSt} and
+                </if>
+                <if test="addtimeEd!=null">
+                    `addtime` &lt;= #{addtimeEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryModuleLimit1" resultMap="ModuleMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_module`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="pid != null">
+                `pid` = #{pid} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="module != null and module!=''">
+                `module` = #{module} and
+            </if>
+            <if test="action != null and action!=''">
+                `action` = #{action} and
+            </if>
+            <if test="params != null and params!=''">
+                `params` = #{params} and
+            </if>
+            <if test="isMenu != null">
+                `is_menu` = #{isMenu} and
+            </if>
+            <if test="isCount != null">
+                `is_count` = #{isCount} and
+            </if>
+            <if test="sort != null">
+                `sort` = #{sort} and
+            </if>
+            <if test="level != null">
+                `level` = #{level} and
+            </if>
+            <if test="icon != null and icon!=''">
+                `icon` = #{icon} and
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Module$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="pidList != null">
+                        `pid` in
+                        <foreach collection="pidList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="pidSt !=null">
+                    `pid` >= #{pidSt} and
+                </if>
+                <if test="pidEd!=null">
+                    `pid` &lt;= #{pidEd} and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="moduleList != null">
+                        `module` in
+                        <foreach collection="moduleList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyModule!=null and fuzzyModule.size()>0">
+                    (
+                    <foreach collection="fuzzyModule"  separator="or" item="item">
+                        `Module` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModule!=null and rightFuzzyModule.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModule"  separator="or" item="item">
+                        `Module` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="actionList != null">
+                        `action` in
+                        <foreach collection="actionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAction!=null and fuzzyAction.size()>0">
+                    (
+                    <foreach collection="fuzzyAction"  separator="or" item="item">
+                        `Action` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAction!=null and rightFuzzyAction.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAction"  separator="or" item="item">
+                        `Action` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="paramsList != null">
+                        `params` in
+                        <foreach collection="paramsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyParams!=null and fuzzyParams.size()>0">
+                    (
+                    <foreach collection="fuzzyParams"  separator="or" item="item">
+                        `Params` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyParams!=null and rightFuzzyParams.size()>0">
+                    (
+                    <foreach collection="rightFuzzyParams"  separator="or" item="item">
+                        `Params` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="isMenuList != null">
+                        `is_menu` in
+                        <foreach collection="isMenuList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="isMenuSt !=null">
+                    `is_menu` >= #{isMenuSt} and
+                </if>
+                <if test="isMenuEd!=null">
+                    `is_menu` &lt;= #{isMenuEd} and
+                </if>
+                    <if test="isCountList != null">
+                        `is_count` in
+                        <foreach collection="isCountList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="isCountSt !=null">
+                    `is_count` >= #{isCountSt} and
+                </if>
+                <if test="isCountEd!=null">
+                    `is_count` &lt;= #{isCountEd} and
+                </if>
+                    <if test="sortList != null">
+                        `sort` in
+                        <foreach collection="sortList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="sortSt !=null">
+                    `sort` >= #{sortSt} and
+                </if>
+                <if test="sortEd!=null">
+                    `sort` &lt;= #{sortEd} and
+                </if>
+                    <if test="levelList != null">
+                        `level` in
+                        <foreach collection="levelList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="levelSt !=null">
+                    `level` >= #{levelSt} and
+                </if>
+                <if test="levelEd!=null">
+                    `level` &lt;= #{levelEd} and
+                </if>
+                    <if test="iconList != null">
+                        `icon` in
+                        <foreach collection="iconList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyIcon!=null and fuzzyIcon.size()>0">
+                    (
+                    <foreach collection="fuzzyIcon"  separator="or" item="item">
+                        `Icon` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyIcon!=null and rightFuzzyIcon.size()>0">
+                    (
+                    <foreach collection="rightFuzzyIcon"  separator="or" item="item">
+                        `Icon` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="addtimeList != null">
+                        `addtime` in
+                        <foreach collection="addtimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="addtimeSt !=null">
+                    `addtime` >= #{addtimeSt} and
+                </if>
+                <if test="addtimeEd!=null">
+                    `addtime` &lt;= #{addtimeEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `pid`,
+        `name`,
+        `module`,
+        `action`,
+        `params`,
+        `is_menu`+0 as `is_menu`,
+        `is_count`+0 as `is_count`,
+        `sort`,
+        `level`,
+        `icon`,
+        `addtime`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Module$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.pid==true">
+                        `pid`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.module==true">
+                        `module`,
+                    </if>
+                    <if test="fetchFields.fetchFields.action==true">
+                        `action`,
+                    </if>
+                    <if test="fetchFields.fetchFields.params==true">
+                        `params`,
+                    </if>
+                    <if test="fetchFields.fetchFields.isMenu==true">
+                        `is_menu`+0 as `is_menu`,
+                    </if>
+                    <if test="fetchFields.fetchFields.isCount==true">
+                        `is_count`+0 as `is_count`,
+                    </if>
+                    <if test="fetchFields.fetchFields.sort==true">
+                        `sort`,
+                    </if>
+                    <if test="fetchFields.fetchFields.level==true">
+                        `level`,
+                    </if>
+                    <if test="fetchFields.fetchFields.icon==true">
+                        `icon`,
+                    </if>
+                    <if test="fetchFields.fetchFields.addtime==true">
+                        `addtime`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.pid==null">
+                        `pid`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.module==null">
+                        `module`,
+                    </if>
+                    <if test="fetchFields.excludeFields.action==null">
+                        `action`,
+                    </if>
+                    <if test="fetchFields.excludeFields.params==null">
+                        `params`,
+                    </if>
+                    <if test="fetchFields.excludeFields.isMenu==null">
+                        `is_menu`+0 as `is_menu`,
+                    </if>
+                    <if test="fetchFields.excludeFields.isCount==null">
+                        `is_count`+0 as `is_count`,
+                    </if>
+                    <if test="fetchFields.excludeFields.sort==null">
+                        `sort`,
+                    </if>
+                    <if test="fetchFields.excludeFields.level==null">
+                        `level`,
+                    </if>
+                    <if test="fetchFields.excludeFields.icon==null">
+                        `icon`,
+                    </if>
+                    <if test="fetchFields.excludeFields.addtime==null">
+                        `addtime`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Module$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

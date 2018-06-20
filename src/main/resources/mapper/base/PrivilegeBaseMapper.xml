@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.PrivilegeBaseMapper">
+
+
+    <insert id="insertPrivilege"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_privilege`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="priName!=null">
+                        `pri_name`,
+                    </if>
+                    <if test="moduleName!=null">
+                        `module_name`,
+                    </if>
+                    <if test="controllerName!=null">
+                        `controller_name`,
+                    </if>
+                    <if test="actionName!=null">
+                        `action_name`,
+                    </if>
+                    <if test="parentId!=null">
+                        `parent_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="priName!=null">
+                    #{priName},
+                </if>
+                <if test="moduleName!=null">
+                    #{moduleName},
+                </if>
+                <if test="controllerName!=null">
+                    #{controllerName},
+                </if>
+                <if test="actionName!=null">
+                    #{actionName},
+                </if>
+                <if test="parentId!=null">
+                    #{parentId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updatePrivilege">
+        UPDATE `tb_privilege`
+        SET
+        <trim suffixOverrides=",">
+            <if test="priName != null and priName!=''">
+                `pri_name` = #{priName},
+            </if>
+            <if test="moduleName != null and moduleName!=''">
+                `module_name` = #{moduleName},
+            </if>
+            <if test="controllerName != null and controllerName!=''">
+                `controller_name` = #{controllerName},
+            </if>
+            <if test="actionName != null and actionName!=''">
+                `action_name` = #{actionName},
+            </if>
+            <if test="parentId != null">
+                `parent_id` = #{parentId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Privilege" id="PrivilegeMap">
+        <result property="id" column="id"/>
+        <result property="priName" column="pri_name"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="controllerName" column="controller_name"/>
+        <result property="actionName" column="action_name"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+
+
+    <select id="queryPrivilege" resultMap="PrivilegeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_privilege`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="priName != null and priName!=''">
+                `pri_name` = #{priName} and
+            </if>
+            <if test="moduleName != null and moduleName!=''">
+                `module_name` = #{moduleName} and
+            </if>
+            <if test="controllerName != null and controllerName!=''">
+                `controller_name` = #{controllerName} and
+            </if>
+            <if test="actionName != null and actionName!=''">
+                `action_name` = #{actionName} and
+            </if>
+            <if test="parentId != null">
+                `parent_id` = #{parentId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Privilege$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="priNameList != null">
+                    `pri_name` in
+                    <foreach collection="priNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPriName!=null and fuzzyPriName.size()>0">
+                    (
+                    <foreach collection="fuzzyPriName"  separator="or" item="item">
+                        `Pri_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPriName!=null and rightFuzzyPriName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPriName"  separator="or" item="item">
+                        `Pri_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="moduleNameList != null">
+                    `module_name` in
+                    <foreach collection="moduleNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyModuleName!=null and fuzzyModuleName.size()>0">
+                    (
+                    <foreach collection="fuzzyModuleName"  separator="or" item="item">
+                        `Module_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModuleName!=null and rightFuzzyModuleName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModuleName"  separator="or" item="item">
+                        `Module_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="controllerNameList != null">
+                    `controller_name` in
+                    <foreach collection="controllerNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyControllerName!=null and fuzzyControllerName.size()>0">
+                    (
+                    <foreach collection="fuzzyControllerName"  separator="or" item="item">
+                        `Controller_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyControllerName!=null and rightFuzzyControllerName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyControllerName"  separator="or" item="item">
+                        `Controller_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="actionNameList != null">
+                    `action_name` in
+                    <foreach collection="actionNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyActionName!=null and fuzzyActionName.size()>0">
+                    (
+                    <foreach collection="fuzzyActionName"  separator="or" item="item">
+                        `Action_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyActionName!=null and rightFuzzyActionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyActionName"  separator="or" item="item">
+                        `Action_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="parentIdList != null">
+                    `parent_id` in
+                    <foreach collection="parentIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="parentIdSt !=null">
+                    `parent_id` >= #{parentIdSt} and
+                </if>
+                <if test="parentIdEd!=null">
+                    `parent_id` &lt;= #{parentIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryPrivilegeLimit1" resultMap="PrivilegeMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_privilege`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="priName != null and priName!=''">
+                `pri_name` = #{priName} and
+            </if>
+            <if test="moduleName != null and moduleName!=''">
+                `module_name` = #{moduleName} and
+            </if>
+            <if test="controllerName != null and controllerName!=''">
+                `controller_name` = #{controllerName} and
+            </if>
+            <if test="actionName != null and actionName!=''">
+                `action_name` = #{actionName} and
+            </if>
+            <if test="parentId != null">
+                `parent_id` = #{parentId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Privilege$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="priNameList != null">
+                        `pri_name` in
+                        <foreach collection="priNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPriName!=null and fuzzyPriName.size()>0">
+                    (
+                    <foreach collection="fuzzyPriName"  separator="or" item="item">
+                        `Pri_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPriName!=null and rightFuzzyPriName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPriName"  separator="or" item="item">
+                        `Pri_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="moduleNameList != null">
+                        `module_name` in
+                        <foreach collection="moduleNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyModuleName!=null and fuzzyModuleName.size()>0">
+                    (
+                    <foreach collection="fuzzyModuleName"  separator="or" item="item">
+                        `Module_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModuleName!=null and rightFuzzyModuleName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModuleName"  separator="or" item="item">
+                        `Module_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="controllerNameList != null">
+                        `controller_name` in
+                        <foreach collection="controllerNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyControllerName!=null and fuzzyControllerName.size()>0">
+                    (
+                    <foreach collection="fuzzyControllerName"  separator="or" item="item">
+                        `Controller_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyControllerName!=null and rightFuzzyControllerName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyControllerName"  separator="or" item="item">
+                        `Controller_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="actionNameList != null">
+                        `action_name` in
+                        <foreach collection="actionNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyActionName!=null and fuzzyActionName.size()>0">
+                    (
+                    <foreach collection="fuzzyActionName"  separator="or" item="item">
+                        `Action_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyActionName!=null and rightFuzzyActionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyActionName"  separator="or" item="item">
+                        `Action_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="parentIdList != null">
+                        `parent_id` in
+                        <foreach collection="parentIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="parentIdSt !=null">
+                    `parent_id` >= #{parentIdSt} and
+                </if>
+                <if test="parentIdEd!=null">
+                    `parent_id` &lt;= #{parentIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `pri_name`,
+        `module_name`,
+        `controller_name`,
+        `action_name`,
+        `parent_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Privilege$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.priName==true">
+                        `pri_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.moduleName==true">
+                        `module_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.controllerName==true">
+                        `controller_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.actionName==true">
+                        `action_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.parentId==true">
+                        `parent_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.priName==null">
+                        `pri_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.moduleName==null">
+                        `module_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.controllerName==null">
+                        `controller_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.actionName==null">
+                        `action_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.parentId==null">
+                        `parent_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Privilege$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

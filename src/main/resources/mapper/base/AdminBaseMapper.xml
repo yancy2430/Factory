@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.AdminBaseMapper">
+
+
+    <insert id="insertAdmin"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_admin`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="username!=null">
+                        `username`,
+                    </if>
+                    <if test="password!=null">
+                        `password`,
+                    </if>
+                    <if test="roleId!=null">
+                        `role_id`,
+                    </if>
+                    <if test="roleName!=null">
+                        `role_name`,
+                    </if>
+                    <if test="loginTime!=null">
+                        `login_time`,
+                    </if>
+                    <if test="loginIp!=null">
+                        `login_ip`,
+                    </if>
+                    <if test="status!=null">
+                        `status`,
+                    </if>
+                    <if test="actions!=null">
+                        `actions`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="username!=null">
+                    #{username},
+                </if>
+                <if test="password!=null">
+                    #{password},
+                </if>
+                <if test="roleId!=null">
+                    #{roleId},
+                </if>
+                <if test="roleName!=null">
+                    #{roleName},
+                </if>
+                <if test="loginTime!=null">
+                    #{loginTime},
+                </if>
+                <if test="loginIp!=null">
+                    #{loginIp},
+                </if>
+                <if test="status!=null">
+                    #{status},
+                </if>
+                <if test="actions!=null">
+                    #{actions},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateAdmin">
+        UPDATE `tb_admin`
+        SET
+        <trim suffixOverrides=",">
+            <if test="username != null and username!=''">
+                `username` = #{username},
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password},
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId},
+            </if>
+            <if test="roleName != null and roleName!=''">
+                `role_name` = #{roleName},
+            </if>
+            <if test="loginTime != null">
+                `login_time` = #{loginTime},
+            </if>
+            <if test="loginIp != null and loginIp!=''">
+                `login_ip` = #{loginIp},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="actions != null and actions!=''">
+                `actions` = #{actions},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Admin" id="AdminMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="loginTime" column="login_time"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="status" column="status"/>
+        <result property="actions" column="actions"/>
+    </resultMap>
+
+
+    <select id="queryAdmin" resultMap="AdminMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_admin`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="username != null and username!=''">
+                `username` = #{username} and
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password} and
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId} and
+            </if>
+            <if test="roleName != null and roleName!=''">
+                `role_name` = #{roleName} and
+            </if>
+            <if test="loginTime != null">
+                `login_time` = #{loginTime} and
+            </if>
+            <if test="loginIp != null and loginIp!=''">
+                `login_ip` = #{loginIp} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="actions != null and actions!=''">
+                `actions` = #{actions} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Admin$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="usernameList != null">
+                    `username` in
+                    <foreach collection="usernameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUsername!=null and fuzzyUsername.size()>0">
+                    (
+                    <foreach collection="fuzzyUsername"  separator="or" item="item">
+                        `Username` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUsername!=null and rightFuzzyUsername.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUsername"  separator="or" item="item">
+                        `Username` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="passwordList != null">
+                    `password` in
+                    <foreach collection="passwordList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPassword!=null and fuzzyPassword.size()>0">
+                    (
+                    <foreach collection="fuzzyPassword"  separator="or" item="item">
+                        `Password` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPassword!=null and rightFuzzyPassword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPassword"  separator="or" item="item">
+                        `Password` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="roleIdList != null">
+                    `role_id` in
+                    <foreach collection="roleIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="roleIdSt !=null">
+                    `role_id` >= #{roleIdSt} and
+                </if>
+                <if test="roleIdEd!=null">
+                    `role_id` &lt;= #{roleIdEd} and
+                </if>
+                <if test="roleNameList != null">
+                    `role_name` in
+                    <foreach collection="roleNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRoleName!=null and fuzzyRoleName.size()>0">
+                    (
+                    <foreach collection="fuzzyRoleName"  separator="or" item="item">
+                        `Role_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRoleName!=null and rightFuzzyRoleName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRoleName"  separator="or" item="item">
+                        `Role_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="loginTimeList != null">
+                    `login_time` in
+                    <foreach collection="loginTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="loginTimeSt !=null">
+                    `login_time` >= #{loginTimeSt} and
+                </if>
+                <if test="loginTimeEd!=null">
+                    `login_time` &lt;= #{loginTimeEd} and
+                </if>
+                <if test="loginIpList != null">
+                    `login_ip` in
+                    <foreach collection="loginIpList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyLoginIp!=null and fuzzyLoginIp.size()>0">
+                    (
+                    <foreach collection="fuzzyLoginIp"  separator="or" item="item">
+                        `Login_ip` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLoginIp!=null and rightFuzzyLoginIp.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLoginIp"  separator="or" item="item">
+                        `Login_ip` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="statusList != null">
+                    `status` in
+                    <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                <if test="actionsList != null">
+                    `actions` in
+                    <foreach collection="actionsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyActions!=null and fuzzyActions.size()>0">
+                    (
+                    <foreach collection="fuzzyActions"  separator="or" item="item">
+                        `Actions` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyActions!=null and rightFuzzyActions.size()>0">
+                    (
+                    <foreach collection="rightFuzzyActions"  separator="or" item="item">
+                        `Actions` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryAdminLimit1" resultMap="AdminMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_admin`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="username != null and username!=''">
+                `username` = #{username} and
+            </if>
+            <if test="password != null and password!=''">
+                `password` = #{password} and
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId} and
+            </if>
+            <if test="roleName != null and roleName!=''">
+                `role_name` = #{roleName} and
+            </if>
+            <if test="loginTime != null">
+                `login_time` = #{loginTime} and
+            </if>
+            <if test="loginIp != null and loginIp!=''">
+                `login_ip` = #{loginIp} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="actions != null and actions!=''">
+                `actions` = #{actions} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Admin$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="usernameList != null">
+                        `username` in
+                        <foreach collection="usernameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUsername!=null and fuzzyUsername.size()>0">
+                    (
+                    <foreach collection="fuzzyUsername"  separator="or" item="item">
+                        `Username` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUsername!=null and rightFuzzyUsername.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUsername"  separator="or" item="item">
+                        `Username` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="passwordList != null">
+                        `password` in
+                        <foreach collection="passwordList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPassword!=null and fuzzyPassword.size()>0">
+                    (
+                    <foreach collection="fuzzyPassword"  separator="or" item="item">
+                        `Password` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPassword!=null and rightFuzzyPassword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPassword"  separator="or" item="item">
+                        `Password` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="roleIdList != null">
+                        `role_id` in
+                        <foreach collection="roleIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="roleIdSt !=null">
+                    `role_id` >= #{roleIdSt} and
+                </if>
+                <if test="roleIdEd!=null">
+                    `role_id` &lt;= #{roleIdEd} and
+                </if>
+                    <if test="roleNameList != null">
+                        `role_name` in
+                        <foreach collection="roleNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRoleName!=null and fuzzyRoleName.size()>0">
+                    (
+                    <foreach collection="fuzzyRoleName"  separator="or" item="item">
+                        `Role_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRoleName!=null and rightFuzzyRoleName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRoleName"  separator="or" item="item">
+                        `Role_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="loginTimeList != null">
+                        `login_time` in
+                        <foreach collection="loginTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="loginTimeSt !=null">
+                    `login_time` >= #{loginTimeSt} and
+                </if>
+                <if test="loginTimeEd!=null">
+                    `login_time` &lt;= #{loginTimeEd} and
+                </if>
+                    <if test="loginIpList != null">
+                        `login_ip` in
+                        <foreach collection="loginIpList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyLoginIp!=null and fuzzyLoginIp.size()>0">
+                    (
+                    <foreach collection="fuzzyLoginIp"  separator="or" item="item">
+                        `Login_ip` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLoginIp!=null and rightFuzzyLoginIp.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLoginIp"  separator="or" item="item">
+                        `Login_ip` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="statusList != null">
+                        `status` in
+                        <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                    <if test="actionsList != null">
+                        `actions` in
+                        <foreach collection="actionsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyActions!=null and fuzzyActions.size()>0">
+                    (
+                    <foreach collection="fuzzyActions"  separator="or" item="item">
+                        `Actions` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyActions!=null and rightFuzzyActions.size()>0">
+                    (
+                    <foreach collection="rightFuzzyActions"  separator="or" item="item">
+                        `Actions` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `username`,
+        `password`,
+        `role_id`,
+        `role_name`,
+        `login_time`,
+        `login_ip`,
+        `status`+0 as `status`,
+        `actions`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Admin$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.username==true">
+                        `username`,
+                    </if>
+                    <if test="fetchFields.fetchFields.password==true">
+                        `password`,
+                    </if>
+                    <if test="fetchFields.fetchFields.roleId==true">
+                        `role_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.roleName==true">
+                        `role_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.loginTime==true">
+                        `login_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.loginIp==true">
+                        `login_ip`,
+                    </if>
+                    <if test="fetchFields.fetchFields.status==true">
+                        `status`+0 as `status`,
+                    </if>
+                    <if test="fetchFields.fetchFields.actions==true">
+                        `actions`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.username==null">
+                        `username`,
+                    </if>
+                    <if test="fetchFields.excludeFields.password==null">
+                        `password`,
+                    </if>
+                    <if test="fetchFields.excludeFields.roleId==null">
+                        `role_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.roleName==null">
+                        `role_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.loginTime==null">
+                        `login_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.loginIp==null">
+                        `login_ip`,
+                    </if>
+                    <if test="fetchFields.excludeFields.status==null">
+                        `status`+0 as `status`,
+                    </if>
+                    <if test="fetchFields.excludeFields.actions==null">
+                        `actions`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Admin$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

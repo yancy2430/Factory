@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.OrderBaseMapper">
+
+
+    <insert id="insertOrder"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_order`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="orderName!=null">
+                        `order_name`,
+                    </if>
+                    <if test="customerId!=null">
+                        `customer_id`,
+                    </if>
+                    <if test="remarks!=null">
+                        `remarks`,
+                    </if>
+                    <if test="dateline!=null">
+                        `dateline`,
+                    </if>
+                    <if test="status!=null">
+                        `status`,
+                    </if>
+                    <if test="deadline!=null">
+                        `deadline`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="orderName!=null">
+                    #{orderName},
+                </if>
+                <if test="customerId!=null">
+                    #{customerId},
+                </if>
+                <if test="remarks!=null">
+                    #{remarks},
+                </if>
+                <if test="dateline!=null">
+                    #{dateline},
+                </if>
+                <if test="status!=null">
+                    #{status},
+                </if>
+                <if test="deadline!=null">
+                    #{deadline},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateOrder">
+        UPDATE `tb_order`
+        SET
+        <trim suffixOverrides=",">
+            <if test="orderName != null and orderName!=''">
+                `order_name` = #{orderName},
+            </if>
+            <if test="customerId != null">
+                `customer_id` = #{customerId},
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks},
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="deadline != null and deadline!=''">
+                `deadline` = #{deadline},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Order" id="OrderMap">
+        <result property="id" column="id"/>
+        <result property="orderName" column="order_name"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="remarks" column="remarks"/>
+        <result property="dateline" column="dateline"/>
+        <result property="status" column="status"/>
+        <result property="deadline" column="deadline"/>
+    </resultMap>
+
+
+    <select id="queryOrder" resultMap="OrderMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_order`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="orderName != null and orderName!=''">
+                `order_name` = #{orderName} and
+            </if>
+            <if test="customerId != null">
+                `customer_id` = #{customerId} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="deadline != null and deadline!=''">
+                `deadline` = #{deadline} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Order$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="orderNameList != null">
+                    `order_name` in
+                    <foreach collection="orderNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyOrderName!=null and fuzzyOrderName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderName"  separator="or" item="item">
+                        `Order_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderName!=null and rightFuzzyOrderName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderName"  separator="or" item="item">
+                        `Order_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="customerIdList != null">
+                    `customer_id` in
+                    <foreach collection="customerIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="customerIdSt !=null">
+                    `customer_id` >= #{customerIdSt} and
+                </if>
+                <if test="customerIdEd!=null">
+                    `customer_id` &lt;= #{customerIdEd} and
+                </if>
+                <if test="remarksList != null">
+                    `remarks` in
+                    <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="datelineList != null">
+                    `dateline` in
+                    <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="statusList != null">
+                    `status` in
+                    <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                <if test="deadlineList != null">
+                    `deadline` in
+                    <foreach collection="deadlineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDeadline!=null and fuzzyDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyDeadline"  separator="or" item="item">
+                        `Deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeadline!=null and rightFuzzyDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeadline"  separator="or" item="item">
+                        `Deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryOrderLimit1" resultMap="OrderMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_order`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="orderName != null and orderName!=''">
+                `order_name` = #{orderName} and
+            </if>
+            <if test="customerId != null">
+                `customer_id` = #{customerId} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="deadline != null and deadline!=''">
+                `deadline` = #{deadline} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Order$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="orderNameList != null">
+                        `order_name` in
+                        <foreach collection="orderNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyOrderName!=null and fuzzyOrderName.size()>0">
+                    (
+                    <foreach collection="fuzzyOrderName"  separator="or" item="item">
+                        `Order_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyOrderName!=null and rightFuzzyOrderName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyOrderName"  separator="or" item="item">
+                        `Order_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="customerIdList != null">
+                        `customer_id` in
+                        <foreach collection="customerIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="customerIdSt !=null">
+                    `customer_id` >= #{customerIdSt} and
+                </if>
+                <if test="customerIdEd!=null">
+                    `customer_id` &lt;= #{customerIdEd} and
+                </if>
+                    <if test="remarksList != null">
+                        `remarks` in
+                        <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="datelineList != null">
+                        `dateline` in
+                        <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="statusList != null">
+                        `status` in
+                        <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                    <if test="deadlineList != null">
+                        `deadline` in
+                        <foreach collection="deadlineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDeadline!=null and fuzzyDeadline.size()>0">
+                    (
+                    <foreach collection="fuzzyDeadline"  separator="or" item="item">
+                        `Deadline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDeadline!=null and rightFuzzyDeadline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDeadline"  separator="or" item="item">
+                        `Deadline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `order_name`,
+        `customer_id`,
+        `remarks`,
+        `dateline`,
+        `status`,
+        `deadline`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Order$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.orderName==true">
+                        `order_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.customerId==true">
+                        `customer_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.remarks==true">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.fetchFields.dateline==true">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.status==true">
+                        `status`,
+                    </if>
+                    <if test="fetchFields.fetchFields.deadline==true">
+                        `deadline`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.orderName==null">
+                        `order_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.customerId==null">
+                        `customer_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.remarks==null">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.excludeFields.dateline==null">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.status==null">
+                        `status`,
+                    </if>
+                    <if test="fetchFields.excludeFields.deadline==null">
+                        `deadline`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Order$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

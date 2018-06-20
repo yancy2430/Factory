@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.ModelBaseMapper">
+
+
+    <insert id="insertModel"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_model`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="modName!=null">
+                        `mod_name`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="modName!=null">
+                    #{modName},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateModel">
+        UPDATE `tb_model`
+        SET
+        <trim suffixOverrides=",">
+            <if test="modName != null and modName!=''">
+                `mod_name` = #{modName},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Model" id="ModelMap">
+        <result property="id" column="id"/>
+        <result property="modName" column="mod_name"/>
+    </resultMap>
+
+
+    <select id="queryModel" resultMap="ModelMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_model`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="modName != null and modName!=''">
+                `mod_name` = #{modName} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Model$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="modNameList != null">
+                    `mod_name` in
+                    <foreach collection="modNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyModName!=null and fuzzyModName.size()>0">
+                    (
+                    <foreach collection="fuzzyModName"  separator="or" item="item">
+                        `Mod_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModName!=null and rightFuzzyModName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModName"  separator="or" item="item">
+                        `Mod_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryModelLimit1" resultMap="ModelMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_model`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="modName != null and modName!=''">
+                `mod_name` = #{modName} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Model$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="modNameList != null">
+                        `mod_name` in
+                        <foreach collection="modNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyModName!=null and fuzzyModName.size()>0">
+                    (
+                    <foreach collection="fuzzyModName"  separator="or" item="item">
+                        `Mod_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModName!=null and rightFuzzyModName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModName"  separator="or" item="item">
+                        `Mod_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `mod_name`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Model$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.modName==true">
+                        `mod_name`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.modName==null">
+                        `mod_name`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Model$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

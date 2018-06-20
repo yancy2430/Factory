@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.RolePriBaseMapper">
+
+
+    <insert id="insertRolePri" >
+        INSERT INTO `tb_role_pri`
+        (
+        <trim suffixOverrides=",">
+                    <if test="priId!=null">
+                        `pri_id`,
+                    </if>
+                    <if test="roleId!=null">
+                        `role_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="priId!=null">
+                    #{priId},
+                </if>
+                <if test="roleId!=null">
+                    #{roleId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateRolePri">
+        UPDATE `tb_role_pri`
+        SET
+        <trim suffixOverrides=",">
+            <if test="priId != null">
+                `pri_id` = #{priId},
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.RolePri" id="RolePriMap">
+        <result property="priId" column="pri_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+
+
+    <select id="queryRolePri" resultMap="RolePriMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_role_pri`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="priId != null">
+                `pri_id` = #{priId} and
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.RolePri$QueryBuilder) == true">
+                <if test="priIdList != null">
+                    `pri_id` in
+                    <foreach collection="priIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="priIdSt !=null">
+                    `pri_id` >= #{priIdSt} and
+                </if>
+                <if test="priIdEd!=null">
+                    `pri_id` &lt;= #{priIdEd} and
+                </if>
+                <if test="roleIdList != null">
+                    `role_id` in
+                    <foreach collection="roleIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="roleIdSt !=null">
+                    `role_id` >= #{roleIdSt} and
+                </if>
+                <if test="roleIdEd!=null">
+                    `role_id` &lt;= #{roleIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryRolePriLimit1" resultMap="RolePriMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_role_pri`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="priId != null">
+                `pri_id` = #{priId} and
+            </if>
+            <if test="roleId != null">
+                `role_id` = #{roleId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.RolePri$QueryBuilder) == true">
+                    <if test="priIdList != null">
+                        `pri_id` in
+                        <foreach collection="priIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="priIdSt !=null">
+                    `pri_id` >= #{priIdSt} and
+                </if>
+                <if test="priIdEd!=null">
+                    `pri_id` &lt;= #{priIdEd} and
+                </if>
+                    <if test="roleIdList != null">
+                        `role_id` in
+                        <foreach collection="roleIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="roleIdSt !=null">
+                    `role_id` >= #{roleIdSt} and
+                </if>
+                <if test="roleIdEd!=null">
+                    `role_id` &lt;= #{roleIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `pri_id`,
+        `role_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.RolePri$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.priId==true">
+                        `pri_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.roleId==true">
+                        `role_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.priId==null">
+                        `pri_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.roleId==null">
+                        `role_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.RolePri$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

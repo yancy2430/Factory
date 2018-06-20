@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.StoragePutBaseMapper">
+
+
+    <insert id="insertStoragePut"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_storage_put`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="supplierId!=null">
+                        `supplier_id`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="addtime!=null">
+                        `addtime`,
+                    </if>
+                    <if test="putorderId!=null">
+                        `putorder_id`,
+                    </if>
+                    <if test="info!=null">
+                        `info`,
+                    </if>
+                    <if test="remarks!=null">
+                        `remarks`,
+                    </if>
+                    <if test="puttime!=null">
+                        `puttime`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="supplierId!=null">
+                    #{supplierId},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="addtime!=null">
+                    #{addtime},
+                </if>
+                <if test="putorderId!=null">
+                    #{putorderId},
+                </if>
+                <if test="info!=null">
+                    #{info},
+                </if>
+                <if test="remarks!=null">
+                    #{remarks},
+                </if>
+                <if test="puttime!=null">
+                    #{puttime},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateStoragePut">
+        UPDATE `tb_storage_put`
+        SET
+        <trim suffixOverrides=",">
+            <if test="supplierId != null">
+                `supplier_id` = #{supplierId},
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime},
+            </if>
+            <if test="putorderId != null and putorderId!=''">
+                `putorder_id` = #{putorderId},
+            </if>
+            <if test="info != null and info!=''">
+                `info` = #{info},
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks},
+            </if>
+            <if test="puttime != null and puttime!=''">
+                `puttime` = #{puttime},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.StoragePut" id="StoragePutMap">
+        <result property="id" column="id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="name" column="name"/>
+        <result property="addtime" column="addtime"/>
+        <result property="putorderId" column="putorder_id"/>
+        <result property="info" column="info"/>
+        <result property="remarks" column="remarks"/>
+        <result property="puttime" column="puttime"/>
+    </resultMap>
+
+
+    <select id="queryStoragePut" resultMap="StoragePutMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_put`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="supplierId != null">
+                `supplier_id` = #{supplierId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime} and
+            </if>
+            <if test="putorderId != null and putorderId!=''">
+                `putorder_id` = #{putorderId} and
+            </if>
+            <if test="info != null and info!=''">
+                `info` = #{info} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="puttime != null and puttime!=''">
+                `puttime` = #{puttime} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StoragePut$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="supplierIdList != null">
+                    `supplier_id` in
+                    <foreach collection="supplierIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="supplierIdSt !=null">
+                    `supplier_id` >= #{supplierIdSt} and
+                </if>
+                <if test="supplierIdEd!=null">
+                    `supplier_id` &lt;= #{supplierIdEd} and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="addtimeList != null">
+                    `addtime` in
+                    <foreach collection="addtimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="addtimeSt !=null">
+                    `addtime` >= #{addtimeSt} and
+                </if>
+                <if test="addtimeEd!=null">
+                    `addtime` &lt;= #{addtimeEd} and
+                </if>
+                <if test="putorderIdList != null">
+                    `putorder_id` in
+                    <foreach collection="putorderIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPutorderId!=null and fuzzyPutorderId.size()>0">
+                    (
+                    <foreach collection="fuzzyPutorderId"  separator="or" item="item">
+                        `Putorder_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPutorderId!=null and rightFuzzyPutorderId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPutorderId"  separator="or" item="item">
+                        `Putorder_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="infoList != null">
+                    `info` in
+                    <foreach collection="infoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyInfo!=null and fuzzyInfo.size()>0">
+                    (
+                    <foreach collection="fuzzyInfo"  separator="or" item="item">
+                        `Info` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInfo!=null and rightFuzzyInfo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInfo"  separator="or" item="item">
+                        `Info` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="remarksList != null">
+                    `remarks` in
+                    <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="puttimeList != null">
+                    `puttime` in
+                    <foreach collection="puttimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPuttime!=null and fuzzyPuttime.size()>0">
+                    (
+                    <foreach collection="fuzzyPuttime"  separator="or" item="item">
+                        `Puttime` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPuttime!=null and rightFuzzyPuttime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPuttime"  separator="or" item="item">
+                        `Puttime` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryStoragePutLimit1" resultMap="StoragePutMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_put`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="supplierId != null">
+                `supplier_id` = #{supplierId} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="addtime != null">
+                `addtime` = #{addtime} and
+            </if>
+            <if test="putorderId != null and putorderId!=''">
+                `putorder_id` = #{putorderId} and
+            </if>
+            <if test="info != null and info!=''">
+                `info` = #{info} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="puttime != null and puttime!=''">
+                `puttime` = #{puttime} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StoragePut$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="supplierIdList != null">
+                        `supplier_id` in
+                        <foreach collection="supplierIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="supplierIdSt !=null">
+                    `supplier_id` >= #{supplierIdSt} and
+                </if>
+                <if test="supplierIdEd!=null">
+                    `supplier_id` &lt;= #{supplierIdEd} and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="addtimeList != null">
+                        `addtime` in
+                        <foreach collection="addtimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="addtimeSt !=null">
+                    `addtime` >= #{addtimeSt} and
+                </if>
+                <if test="addtimeEd!=null">
+                    `addtime` &lt;= #{addtimeEd} and
+                </if>
+                    <if test="putorderIdList != null">
+                        `putorder_id` in
+                        <foreach collection="putorderIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPutorderId!=null and fuzzyPutorderId.size()>0">
+                    (
+                    <foreach collection="fuzzyPutorderId"  separator="or" item="item">
+                        `Putorder_id` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPutorderId!=null and rightFuzzyPutorderId.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPutorderId"  separator="or" item="item">
+                        `Putorder_id` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="infoList != null">
+                        `info` in
+                        <foreach collection="infoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyInfo!=null and fuzzyInfo.size()>0">
+                    (
+                    <foreach collection="fuzzyInfo"  separator="or" item="item">
+                        `Info` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInfo!=null and rightFuzzyInfo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInfo"  separator="or" item="item">
+                        `Info` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="remarksList != null">
+                        `remarks` in
+                        <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="puttimeList != null">
+                        `puttime` in
+                        <foreach collection="puttimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPuttime!=null and fuzzyPuttime.size()>0">
+                    (
+                    <foreach collection="fuzzyPuttime"  separator="or" item="item">
+                        `Puttime` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPuttime!=null and rightFuzzyPuttime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPuttime"  separator="or" item="item">
+                        `Puttime` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `supplier_id`,
+        `name`,
+        `addtime`,
+        `putorder_id`,
+        `info`,
+        `remarks`,
+        `puttime`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StoragePut$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.supplierId==true">
+                        `supplier_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.addtime==true">
+                        `addtime`,
+                    </if>
+                    <if test="fetchFields.fetchFields.putorderId==true">
+                        `putorder_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.info==true">
+                        `info`,
+                    </if>
+                    <if test="fetchFields.fetchFields.remarks==true">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.fetchFields.puttime==true">
+                        `puttime`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.supplierId==null">
+                        `supplier_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.addtime==null">
+                        `addtime`,
+                    </if>
+                    <if test="fetchFields.excludeFields.putorderId==null">
+                        `putorder_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.info==null">
+                        `info`,
+                    </if>
+                    <if test="fetchFields.excludeFields.remarks==null">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.excludeFields.puttime==null">
+                        `puttime`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.StoragePut$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

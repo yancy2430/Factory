@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.StorageMaterielBaseMapper">
+
+
+    <insert id="insertStorageMateriel"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_storage_materiel`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="materielNo!=null">
+                        `materiel_no`,
+                    </if>
+                    <if test="cateId!=null">
+                        `cate_id`,
+                    </if>
+                    <if test="materielCompany!=null">
+                        `materiel_company`,
+                    </if>
+                    <if test="materielNumber!=null">
+                        `materiel_number`,
+                    </if>
+                    <if test="materielName!=null">
+                        `materiel_name`,
+                    </if>
+                    <if test="spec!=null">
+                        `spec`,
+                    </if>
+                    <if test="dateline!=null">
+                        `dateline`,
+                    </if>
+                    <if test="remarks!=null">
+                        `remarks`,
+                    </if>
+                    <if test="image!=null">
+                        `image`,
+                    </if>
+                    <if test="locationId!=null">
+                        `location_id`,
+                    </if>
+                    <if test="lockNumber!=null">
+                        `lock_number`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="materielNo!=null">
+                    #{materielNo},
+                </if>
+                <if test="cateId!=null">
+                    #{cateId},
+                </if>
+                <if test="materielCompany!=null">
+                    #{materielCompany},
+                </if>
+                <if test="materielNumber!=null">
+                    #{materielNumber},
+                </if>
+                <if test="materielName!=null">
+                    #{materielName},
+                </if>
+                <if test="spec!=null">
+                    #{spec},
+                </if>
+                <if test="dateline!=null">
+                    #{dateline},
+                </if>
+                <if test="remarks!=null">
+                    #{remarks},
+                </if>
+                <if test="image!=null">
+                    #{image},
+                </if>
+                <if test="locationId!=null">
+                    #{locationId},
+                </if>
+                <if test="lockNumber!=null">
+                    #{lockNumber},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateStorageMateriel">
+        UPDATE `tb_storage_materiel`
+        SET
+        <trim suffixOverrides=",">
+            <if test="materielNo != null and materielNo!=''">
+                `materiel_no` = #{materielNo},
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId},
+            </if>
+            <if test="materielCompany != null and materielCompany!=''">
+                `materiel_company` = #{materielCompany},
+            </if>
+            <if test="materielNumber != null">
+                `materiel_number` = #{materielNumber},
+            </if>
+            <if test="materielName != null and materielName!=''">
+                `materiel_name` = #{materielName},
+            </if>
+            <if test="spec != null and spec!=''">
+                `spec` = #{spec},
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline},
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks},
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image},
+            </if>
+            <if test="locationId != null">
+                `location_id` = #{locationId},
+            </if>
+            <if test="lockNumber != null">
+                `lock_number` = #{lockNumber},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.StorageMateriel" id="StorageMaterielMap">
+        <result property="id" column="id"/>
+        <result property="materielNo" column="materiel_no"/>
+        <result property="cateId" column="cate_id"/>
+        <result property="materielCompany" column="materiel_company"/>
+        <result property="materielNumber" column="materiel_number"/>
+        <result property="materielName" column="materiel_name"/>
+        <result property="spec" column="spec"/>
+        <result property="dateline" column="dateline"/>
+        <result property="remarks" column="remarks"/>
+        <result property="image" column="image"/>
+        <result property="locationId" column="location_id"/>
+        <result property="lockNumber" column="lock_number"/>
+    </resultMap>
+
+
+    <select id="queryStorageMateriel" resultMap="StorageMaterielMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_materiel`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="materielNo != null and materielNo!=''">
+                `materiel_no` = #{materielNo} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="materielCompany != null and materielCompany!=''">
+                `materiel_company` = #{materielCompany} and
+            </if>
+            <if test="materielNumber != null">
+                `materiel_number` = #{materielNumber} and
+            </if>
+            <if test="materielName != null and materielName!=''">
+                `materiel_name` = #{materielName} and
+            </if>
+            <if test="spec != null and spec!=''">
+                `spec` = #{spec} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="locationId != null">
+                `location_id` = #{locationId} and
+            </if>
+            <if test="lockNumber != null">
+                `lock_number` = #{lockNumber} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageMateriel$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="materielNoList != null">
+                    `materiel_no` in
+                    <foreach collection="materielNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterielNo!=null and fuzzyMaterielNo.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielNo"  separator="or" item="item">
+                        `Materiel_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielNo!=null and rightFuzzyMaterielNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielNo"  separator="or" item="item">
+                        `Materiel_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="cateIdList != null">
+                    `cate_id` in
+                    <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                <if test="materielCompanyList != null">
+                    `materiel_company` in
+                    <foreach collection="materielCompanyList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterielCompany!=null and fuzzyMaterielCompany.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielCompany"  separator="or" item="item">
+                        `Materiel_company` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielCompany!=null and rightFuzzyMaterielCompany.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielCompany"  separator="or" item="item">
+                        `Materiel_company` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="materielNumberList != null">
+                    `materiel_number` in
+                    <foreach collection="materielNumberList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="materielNumberSt !=null">
+                    `materiel_number` >= #{materielNumberSt} and
+                </if>
+                <if test="materielNumberEd!=null">
+                    `materiel_number` &lt;= #{materielNumberEd} and
+                </if>
+                <if test="materielNameList != null">
+                    `materiel_name` in
+                    <foreach collection="materielNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMaterielName!=null and fuzzyMaterielName.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielName"  separator="or" item="item">
+                        `Materiel_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielName!=null and rightFuzzyMaterielName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielName"  separator="or" item="item">
+                        `Materiel_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="specList != null">
+                    `spec` in
+                    <foreach collection="specList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySpec!=null and fuzzySpec.size()>0">
+                    (
+                    <foreach collection="fuzzySpec"  separator="or" item="item">
+                        `Spec` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpec!=null and rightFuzzySpec.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpec"  separator="or" item="item">
+                        `Spec` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="datelineList != null">
+                    `dateline` in
+                    <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="remarksList != null">
+                    `remarks` in
+                    <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="imageList != null">
+                    `image` in
+                    <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="locationIdList != null">
+                    `location_id` in
+                    <foreach collection="locationIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="locationIdSt !=null">
+                    `location_id` >= #{locationIdSt} and
+                </if>
+                <if test="locationIdEd!=null">
+                    `location_id` &lt;= #{locationIdEd} and
+                </if>
+                <if test="lockNumberList != null">
+                    `lock_number` in
+                    <foreach collection="lockNumberList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="lockNumberSt !=null">
+                    `lock_number` >= #{lockNumberSt} and
+                </if>
+                <if test="lockNumberEd!=null">
+                    `lock_number` &lt;= #{lockNumberEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryStorageMaterielLimit1" resultMap="StorageMaterielMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_materiel`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="materielNo != null and materielNo!=''">
+                `materiel_no` = #{materielNo} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="materielCompany != null and materielCompany!=''">
+                `materiel_company` = #{materielCompany} and
+            </if>
+            <if test="materielNumber != null">
+                `materiel_number` = #{materielNumber} and
+            </if>
+            <if test="materielName != null and materielName!=''">
+                `materiel_name` = #{materielName} and
+            </if>
+            <if test="spec != null and spec!=''">
+                `spec` = #{spec} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="remarks != null and remarks!=''">
+                `remarks` = #{remarks} and
+            </if>
+            <if test="image != null and image!=''">
+                `image` = #{image} and
+            </if>
+            <if test="locationId != null">
+                `location_id` = #{locationId} and
+            </if>
+            <if test="lockNumber != null">
+                `lock_number` = #{lockNumber} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageMateriel$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="materielNoList != null">
+                        `materiel_no` in
+                        <foreach collection="materielNoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMaterielNo!=null and fuzzyMaterielNo.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielNo"  separator="or" item="item">
+                        `Materiel_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielNo!=null and rightFuzzyMaterielNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielNo"  separator="or" item="item">
+                        `Materiel_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="cateIdList != null">
+                        `cate_id` in
+                        <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                    <if test="materielCompanyList != null">
+                        `materiel_company` in
+                        <foreach collection="materielCompanyList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMaterielCompany!=null and fuzzyMaterielCompany.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielCompany"  separator="or" item="item">
+                        `Materiel_company` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielCompany!=null and rightFuzzyMaterielCompany.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielCompany"  separator="or" item="item">
+                        `Materiel_company` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="materielNumberList != null">
+                        `materiel_number` in
+                        <foreach collection="materielNumberList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="materielNumberSt !=null">
+                    `materiel_number` >= #{materielNumberSt} and
+                </if>
+                <if test="materielNumberEd!=null">
+                    `materiel_number` &lt;= #{materielNumberEd} and
+                </if>
+                    <if test="materielNameList != null">
+                        `materiel_name` in
+                        <foreach collection="materielNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMaterielName!=null and fuzzyMaterielName.size()>0">
+                    (
+                    <foreach collection="fuzzyMaterielName"  separator="or" item="item">
+                        `Materiel_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMaterielName!=null and rightFuzzyMaterielName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMaterielName"  separator="or" item="item">
+                        `Materiel_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="specList != null">
+                        `spec` in
+                        <foreach collection="specList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySpec!=null and fuzzySpec.size()>0">
+                    (
+                    <foreach collection="fuzzySpec"  separator="or" item="item">
+                        `Spec` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpec!=null and rightFuzzySpec.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpec"  separator="or" item="item">
+                        `Spec` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="datelineList != null">
+                        `dateline` in
+                        <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="remarksList != null">
+                        `remarks` in
+                        <foreach collection="remarksList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyRemarks!=null and fuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="fuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyRemarks!=null and rightFuzzyRemarks.size()>0">
+                    (
+                    <foreach collection="rightFuzzyRemarks"  separator="or" item="item">
+                        `Remarks` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="imageList != null">
+                        `image` in
+                        <foreach collection="imageList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImage!=null and fuzzyImage.size()>0">
+                    (
+                    <foreach collection="fuzzyImage"  separator="or" item="item">
+                        `Image` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImage!=null and rightFuzzyImage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImage"  separator="or" item="item">
+                        `Image` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="locationIdList != null">
+                        `location_id` in
+                        <foreach collection="locationIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="locationIdSt !=null">
+                    `location_id` >= #{locationIdSt} and
+                </if>
+                <if test="locationIdEd!=null">
+                    `location_id` &lt;= #{locationIdEd} and
+                </if>
+                    <if test="lockNumberList != null">
+                        `lock_number` in
+                        <foreach collection="lockNumberList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="lockNumberSt !=null">
+                    `lock_number` >= #{lockNumberSt} and
+                </if>
+                <if test="lockNumberEd!=null">
+                    `lock_number` &lt;= #{lockNumberEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `materiel_no`,
+        `cate_id`,
+        `materiel_company`,
+        `materiel_number`,
+        `materiel_name`,
+        `spec`,
+        `dateline`,
+        `remarks`,
+        `image`,
+        `location_id`,
+        `lock_number`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageMateriel$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.materielNo==true">
+                        `materiel_no`,
+                    </if>
+                    <if test="fetchFields.fetchFields.cateId==true">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.materielCompany==true">
+                        `materiel_company`,
+                    </if>
+                    <if test="fetchFields.fetchFields.materielNumber==true">
+                        `materiel_number`,
+                    </if>
+                    <if test="fetchFields.fetchFields.materielName==true">
+                        `materiel_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.spec==true">
+                        `spec`,
+                    </if>
+                    <if test="fetchFields.fetchFields.dateline==true">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.remarks==true">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.fetchFields.image==true">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.fetchFields.locationId==true">
+                        `location_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.lockNumber==true">
+                        `lock_number`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.materielNo==null">
+                        `materiel_no`,
+                    </if>
+                    <if test="fetchFields.excludeFields.cateId==null">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.materielCompany==null">
+                        `materiel_company`,
+                    </if>
+                    <if test="fetchFields.excludeFields.materielNumber==null">
+                        `materiel_number`,
+                    </if>
+                    <if test="fetchFields.excludeFields.materielName==null">
+                        `materiel_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.spec==null">
+                        `spec`,
+                    </if>
+                    <if test="fetchFields.excludeFields.dateline==null">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.remarks==null">
+                        `remarks`,
+                    </if>
+                    <if test="fetchFields.excludeFields.image==null">
+                        `image`,
+                    </if>
+                    <if test="fetchFields.excludeFields.locationId==null">
+                        `location_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.lockNumber==null">
+                        `lock_number`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.StorageMateriel$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

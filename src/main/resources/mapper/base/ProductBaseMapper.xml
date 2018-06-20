@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.ProductBaseMapper">
+
+
+    <insert id="insertProduct"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_product`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="productNo!=null">
+                        `product_no`,
+                    </if>
+                    <if test="productName!=null">
+                        `product_name`,
+                    </if>
+                    <if test="standard!=null">
+                        `standard`,
+                    </if>
+                    <if test="production!=null">
+                        `production`,
+                    </if>
+                    <if test="dateline!=null">
+                        `dateline`,
+                    </if>
+                    <if test="status!=null">
+                        `status`,
+                    </if>
+                    <if test="cateId!=null">
+                        `cate_id`,
+                    </if>
+                    <if test="productUpid!=null">
+                        `product_upid`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="productNo!=null">
+                    #{productNo},
+                </if>
+                <if test="productName!=null">
+                    #{productName},
+                </if>
+                <if test="standard!=null">
+                    #{standard},
+                </if>
+                <if test="production!=null">
+                    #{production},
+                </if>
+                <if test="dateline!=null">
+                    #{dateline},
+                </if>
+                <if test="status!=null">
+                    #{status},
+                </if>
+                <if test="cateId!=null">
+                    #{cateId},
+                </if>
+                <if test="productUpid!=null">
+                    #{productUpid},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateProduct">
+        UPDATE `tb_product`
+        SET
+        <trim suffixOverrides=",">
+            <if test="productNo != null and productNo!=''">
+                `product_no` = #{productNo},
+            </if>
+            <if test="productName != null and productName!=''">
+                `product_name` = #{productName},
+            </if>
+            <if test="standard != null and standard!=''">
+                `standard` = #{standard},
+            </if>
+            <if test="production != null and production!=''">
+                `production` = #{production},
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId},
+            </if>
+            <if test="productUpid != null">
+                `product_upid` = #{productUpid},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Product" id="ProductMap">
+        <result property="id" column="id"/>
+        <result property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="standard" column="standard"/>
+        <result property="production" column="production"/>
+        <result property="dateline" column="dateline"/>
+        <result property="status" column="status"/>
+        <result property="cateId" column="cate_id"/>
+        <result property="productUpid" column="product_upid"/>
+    </resultMap>
+
+
+    <select id="queryProduct" resultMap="ProductMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_product`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="productNo != null and productNo!=''">
+                `product_no` = #{productNo} and
+            </if>
+            <if test="productName != null and productName!=''">
+                `product_name` = #{productName} and
+            </if>
+            <if test="standard != null and standard!=''">
+                `standard` = #{standard} and
+            </if>
+            <if test="production != null and production!=''">
+                `production` = #{production} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="productUpid != null">
+                `product_upid` = #{productUpid} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Product$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="productNoList != null">
+                    `product_no` in
+                    <foreach collection="productNoList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProductNo!=null and fuzzyProductNo.size()>0">
+                    (
+                    <foreach collection="fuzzyProductNo"  separator="or" item="item">
+                        `Product_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProductNo!=null and rightFuzzyProductNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProductNo"  separator="or" item="item">
+                        `Product_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="productNameList != null">
+                    `product_name` in
+                    <foreach collection="productNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProductName!=null and fuzzyProductName.size()>0">
+                    (
+                    <foreach collection="fuzzyProductName"  separator="or" item="item">
+                        `Product_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProductName!=null and rightFuzzyProductName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProductName"  separator="or" item="item">
+                        `Product_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="standardList != null">
+                    `standard` in
+                    <foreach collection="standardList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyStandard!=null and fuzzyStandard.size()>0">
+                    (
+                    <foreach collection="fuzzyStandard"  separator="or" item="item">
+                        `Standard` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStandard!=null and rightFuzzyStandard.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStandard"  separator="or" item="item">
+                        `Standard` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="productionList != null">
+                    `production` in
+                    <foreach collection="productionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyProduction!=null and fuzzyProduction.size()>0">
+                    (
+                    <foreach collection="fuzzyProduction"  separator="or" item="item">
+                        `Production` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProduction!=null and rightFuzzyProduction.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProduction"  separator="or" item="item">
+                        `Production` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="datelineList != null">
+                    `dateline` in
+                    <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="statusList != null">
+                    `status` in
+                    <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                <if test="cateIdList != null">
+                    `cate_id` in
+                    <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                <if test="productUpidList != null">
+                    `product_upid` in
+                    <foreach collection="productUpidList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="productUpidSt !=null">
+                    `product_upid` >= #{productUpidSt} and
+                </if>
+                <if test="productUpidEd!=null">
+                    `product_upid` &lt;= #{productUpidEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryProductLimit1" resultMap="ProductMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_product`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="productNo != null and productNo!=''">
+                `product_no` = #{productNo} and
+            </if>
+            <if test="productName != null and productName!=''">
+                `product_name` = #{productName} and
+            </if>
+            <if test="standard != null and standard!=''">
+                `standard` = #{standard} and
+            </if>
+            <if test="production != null and production!=''">
+                `production` = #{production} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="status != null">
+                `status` = #{status} and
+            </if>
+            <if test="cateId != null">
+                `cate_id` = #{cateId} and
+            </if>
+            <if test="productUpid != null">
+                `product_upid` = #{productUpid} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Product$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="productNoList != null">
+                        `product_no` in
+                        <foreach collection="productNoList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProductNo!=null and fuzzyProductNo.size()>0">
+                    (
+                    <foreach collection="fuzzyProductNo"  separator="or" item="item">
+                        `Product_no` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProductNo!=null and rightFuzzyProductNo.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProductNo"  separator="or" item="item">
+                        `Product_no` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="productNameList != null">
+                        `product_name` in
+                        <foreach collection="productNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProductName!=null and fuzzyProductName.size()>0">
+                    (
+                    <foreach collection="fuzzyProductName"  separator="or" item="item">
+                        `Product_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProductName!=null and rightFuzzyProductName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProductName"  separator="or" item="item">
+                        `Product_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="standardList != null">
+                        `standard` in
+                        <foreach collection="standardList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyStandard!=null and fuzzyStandard.size()>0">
+                    (
+                    <foreach collection="fuzzyStandard"  separator="or" item="item">
+                        `Standard` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStandard!=null and rightFuzzyStandard.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStandard"  separator="or" item="item">
+                        `Standard` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="productionList != null">
+                        `production` in
+                        <foreach collection="productionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyProduction!=null and fuzzyProduction.size()>0">
+                    (
+                    <foreach collection="fuzzyProduction"  separator="or" item="item">
+                        `Production` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyProduction!=null and rightFuzzyProduction.size()>0">
+                    (
+                    <foreach collection="rightFuzzyProduction"  separator="or" item="item">
+                        `Production` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="datelineList != null">
+                        `dateline` in
+                        <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="statusList != null">
+                        `status` in
+                        <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="statusSt !=null">
+                    `status` >= #{statusSt} and
+                </if>
+                <if test="statusEd!=null">
+                    `status` &lt;= #{statusEd} and
+                </if>
+                    <if test="cateIdList != null">
+                        `cate_id` in
+                        <foreach collection="cateIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="cateIdSt !=null">
+                    `cate_id` >= #{cateIdSt} and
+                </if>
+                <if test="cateIdEd!=null">
+                    `cate_id` &lt;= #{cateIdEd} and
+                </if>
+                    <if test="productUpidList != null">
+                        `product_upid` in
+                        <foreach collection="productUpidList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="productUpidSt !=null">
+                    `product_upid` >= #{productUpidSt} and
+                </if>
+                <if test="productUpidEd!=null">
+                    `product_upid` &lt;= #{productUpidEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `product_no`,
+        `product_name`,
+        `standard`,
+        `production`,
+        `dateline`,
+        `status`,
+        `cate_id`,
+        `product_upid`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Product$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productNo==true">
+                        `product_no`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productName==true">
+                        `product_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.standard==true">
+                        `standard`,
+                    </if>
+                    <if test="fetchFields.fetchFields.production==true">
+                        `production`,
+                    </if>
+                    <if test="fetchFields.fetchFields.dateline==true">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.status==true">
+                        `status`,
+                    </if>
+                    <if test="fetchFields.fetchFields.cateId==true">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.productUpid==true">
+                        `product_upid`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productNo==null">
+                        `product_no`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productName==null">
+                        `product_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.standard==null">
+                        `standard`,
+                    </if>
+                    <if test="fetchFields.excludeFields.production==null">
+                        `production`,
+                    </if>
+                    <if test="fetchFields.excludeFields.dateline==null">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.status==null">
+                        `status`,
+                    </if>
+                    <if test="fetchFields.excludeFields.cateId==null">
+                        `cate_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.productUpid==null">
+                        `product_upid`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Product$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.StorageLocationBaseMapper">
+
+
+    <insert id="insertStorageLocation"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `tb_storage_location`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="locationName!=null">
+                        `location_name`,
+                    </if>
+                    <if test="upId!=null">
+                        `up_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="locationName!=null">
+                    #{locationName},
+                </if>
+                <if test="upId!=null">
+                    #{upId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateStorageLocation">
+        UPDATE `tb_storage_location`
+        SET
+        <trim suffixOverrides=",">
+            <if test="locationName != null and locationName!=''">
+                `location_name` = #{locationName},
+            </if>
+            <if test="upId != null">
+                `up_id` = #{upId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.StorageLocation" id="StorageLocationMap">
+        <result property="id" column="id"/>
+        <result property="locationName" column="location_name"/>
+        <result property="upId" column="up_id"/>
+    </resultMap>
+
+
+    <select id="queryStorageLocation" resultMap="StorageLocationMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_location`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="locationName != null and locationName!=''">
+                `location_name` = #{locationName} and
+            </if>
+            <if test="upId != null">
+                `up_id` = #{upId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageLocation$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="locationNameList != null">
+                    `location_name` in
+                    <foreach collection="locationNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyLocationName!=null and fuzzyLocationName.size()>0">
+                    (
+                    <foreach collection="fuzzyLocationName"  separator="or" item="item">
+                        `Location_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLocationName!=null and rightFuzzyLocationName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLocationName"  separator="or" item="item">
+                        `Location_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="upIdList != null">
+                    `up_id` in
+                    <foreach collection="upIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="upIdSt !=null">
+                    `up_id` >= #{upIdSt} and
+                </if>
+                <if test="upIdEd!=null">
+                    `up_id` &lt;= #{upIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryStorageLocationLimit1" resultMap="StorageLocationMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_storage_location`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="locationName != null and locationName!=''">
+                `location_name` = #{locationName} and
+            </if>
+            <if test="upId != null">
+                `up_id` = #{upId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageLocation$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="locationNameList != null">
+                        `location_name` in
+                        <foreach collection="locationNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyLocationName!=null and fuzzyLocationName.size()>0">
+                    (
+                    <foreach collection="fuzzyLocationName"  separator="or" item="item">
+                        `Location_name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyLocationName!=null and rightFuzzyLocationName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyLocationName"  separator="or" item="item">
+                        `Location_name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="upIdList != null">
+                        `up_id` in
+                        <foreach collection="upIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="upIdSt !=null">
+                    `up_id` >= #{upIdSt} and
+                </if>
+                <if test="upIdEd!=null">
+                    `up_id` &lt;= #{upIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `location_name`,
+        `up_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.StorageLocation$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.locationName==true">
+                        `location_name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.upId==true">
+                        `up_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.locationName==null">
+                        `location_name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.upId==null">
+                        `up_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.StorageLocation$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.factory.dao.base.LogBaseMapper">
+
+
+    <insert id="insertLog"  useGeneratedKeys="true" keyProperty="logId">
+        INSERT INTO `tb_log`
+        (
+        <trim suffixOverrides=",">
+                    <if test="logId!=null">
+                        `log_id`,
+                    </if>
+                    <if test="modular!=null">
+                        `modular`,
+                    </if>
+                    <if test="message!=null">
+                        `message`,
+                    </if>
+                    <if test="operationid!=null">
+                        `operationid`,
+                    </if>
+                    <if test="dateline!=null">
+                        `dateline`,
+                    </if>
+                    <if test="adminId!=null">
+                        `admin_id`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="logId!=null">
+                    #{logId},
+                </if>
+                <if test="modular!=null">
+                    #{modular},
+                </if>
+                <if test="message!=null">
+                    #{message},
+                </if>
+                <if test="operationid!=null">
+                    #{operationid},
+                </if>
+                <if test="dateline!=null">
+                    #{dateline},
+                </if>
+                <if test="adminId!=null">
+                    #{adminId},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateLog">
+        UPDATE `tb_log`
+        SET
+        <trim suffixOverrides=",">
+            <if test="modular != null and modular!=''">
+                `modular` = #{modular},
+            </if>
+            <if test="message != null and message!=''">
+                `message` = #{message},
+            </if>
+            <if test="operationid != null">
+                `operationid` = #{operationid},
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline},
+            </if>
+            <if test="adminId != null">
+                `admin_id` = #{adminId},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `log_id` = #{logId} and
+        </trim>
+    </update>
+
+
+
+    <resultMap type="com.tdeado.factory.entity.Log" id="LogMap">
+        <result property="logId" column="log_id"/>
+        <result property="modular" column="modular"/>
+        <result property="message" column="message"/>
+        <result property="operationid" column="operationid"/>
+        <result property="dateline" column="dateline"/>
+        <result property="adminId" column="admin_id"/>
+    </resultMap>
+
+
+    <select id="queryLog" resultMap="LogMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_log`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="logId != null">
+                `log_id` = #{logId} and
+            </if>
+            <if test="modular != null and modular!=''">
+                `modular` = #{modular} and
+            </if>
+            <if test="message != null and message!=''">
+                `message` = #{message} and
+            </if>
+            <if test="operationid != null">
+                `operationid` = #{operationid} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="adminId != null">
+                `admin_id` = #{adminId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Log$QueryBuilder) == true">
+                <if test="logIdList != null">
+                    `log_id` in
+                    <foreach collection="logIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="logIdSt !=null">
+                    `log_id` >= #{logIdSt} and
+                </if>
+                <if test="logIdEd!=null">
+                    `log_id` &lt;= #{logIdEd} and
+                </if>
+                <if test="modularList != null">
+                    `modular` in
+                    <foreach collection="modularList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyModular!=null and fuzzyModular.size()>0">
+                    (
+                    <foreach collection="fuzzyModular"  separator="or" item="item">
+                        `Modular` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModular!=null and rightFuzzyModular.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModular"  separator="or" item="item">
+                        `Modular` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="messageList != null">
+                    `message` in
+                    <foreach collection="messageList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyMessage!=null and fuzzyMessage.size()>0">
+                    (
+                    <foreach collection="fuzzyMessage"  separator="or" item="item">
+                        `Message` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMessage!=null and rightFuzzyMessage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMessage"  separator="or" item="item">
+                        `Message` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="operationidList != null">
+                    `operationid` in
+                    <foreach collection="operationidList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="operationidSt !=null">
+                    `operationid` >= #{operationidSt} and
+                </if>
+                <if test="operationidEd!=null">
+                    `operationid` &lt;= #{operationidEd} and
+                </if>
+                <if test="datelineList != null">
+                    `dateline` in
+                    <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="adminIdList != null">
+                    `admin_id` in
+                    <foreach collection="adminIdList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="adminIdSt !=null">
+                    `admin_id` >= #{adminIdSt} and
+                </if>
+                <if test="adminIdEd!=null">
+                    `admin_id` &lt;= #{adminIdEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryLogLimit1" resultMap="LogMap">
+        select
+        <include refid="baseResult"></include>
+        from  `tb_log`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="logId != null">
+                `log_id` = #{logId} and
+            </if>
+            <if test="modular != null and modular!=''">
+                `modular` = #{modular} and
+            </if>
+            <if test="message != null and message!=''">
+                `message` = #{message} and
+            </if>
+            <if test="operationid != null">
+                `operationid` = #{operationid} and
+            </if>
+            <if test="dateline != null and dateline!=''">
+                `dateline` = #{dateline} and
+            </if>
+            <if test="adminId != null">
+                `admin_id` = #{adminId} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Log$QueryBuilder) == true">
+                    <if test="logIdList != null">
+                        `log_id` in
+                        <foreach collection="logIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="logIdSt !=null">
+                    `log_id` >= #{logIdSt} and
+                </if>
+                <if test="logIdEd!=null">
+                    `log_id` &lt;= #{logIdEd} and
+                </if>
+                    <if test="modularList != null">
+                        `modular` in
+                        <foreach collection="modularList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyModular!=null and fuzzyModular.size()>0">
+                    (
+                    <foreach collection="fuzzyModular"  separator="or" item="item">
+                        `Modular` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyModular!=null and rightFuzzyModular.size()>0">
+                    (
+                    <foreach collection="rightFuzzyModular"  separator="or" item="item">
+                        `Modular` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="messageList != null">
+                        `message` in
+                        <foreach collection="messageList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyMessage!=null and fuzzyMessage.size()>0">
+                    (
+                    <foreach collection="fuzzyMessage"  separator="or" item="item">
+                        `Message` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyMessage!=null and rightFuzzyMessage.size()>0">
+                    (
+                    <foreach collection="rightFuzzyMessage"  separator="or" item="item">
+                        `Message` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="operationidList != null">
+                        `operationid` in
+                        <foreach collection="operationidList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="operationidSt !=null">
+                    `operationid` >= #{operationidSt} and
+                </if>
+                <if test="operationidEd!=null">
+                    `operationid` &lt;= #{operationidEd} and
+                </if>
+                    <if test="datelineList != null">
+                        `dateline` in
+                        <foreach collection="datelineList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDateline!=null and fuzzyDateline.size()>0">
+                    (
+                    <foreach collection="fuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDateline!=null and rightFuzzyDateline.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDateline"  separator="or" item="item">
+                        `Dateline` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="adminIdList != null">
+                        `admin_id` in
+                        <foreach collection="adminIdList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="adminIdSt !=null">
+                    `admin_id` >= #{adminIdSt} and
+                </if>
+                <if test="adminIdEd!=null">
+                    `admin_id` &lt;= #{adminIdEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `log_id`,
+        `modular`,
+        `message`,
+        `operationid`,
+        `dateline`,
+        `admin_id`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.factory.entity.Log$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.logId==true">
+                        `log_id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.modular==true">
+                        `modular`,
+                    </if>
+                    <if test="fetchFields.fetchFields.message==true">
+                        `message`,
+                    </if>
+                    <if test="fetchFields.fetchFields.operationid==true">
+                        `operationid`,
+                    </if>
+                    <if test="fetchFields.fetchFields.dateline==true">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.fetchFields.adminId==true">
+                        `admin_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.logId==null">
+                        `log_id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.modular==null">
+                        `modular`,
+                    </if>
+                    <if test="fetchFields.excludeFields.message==null">
+                        `message`,
+                    </if>
+                    <if test="fetchFields.excludeFields.operationid==null">
+                        `operationid`,
+                    </if>
+                    <if test="fetchFields.excludeFields.dateline==null">
+                        `dateline`,
+                    </if>
+                    <if test="fetchFields.excludeFields.adminId==null">
+                        `admin_id`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.factory.entity.Log$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
