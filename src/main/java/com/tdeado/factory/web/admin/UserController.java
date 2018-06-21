@@ -42,16 +42,4 @@ public class UserController extends BaseController {
         return retData(users, users.getTotal(), "获取用户成功");
     }
 
-    @RequestMapping(value = "user/getUserList", method = {RequestMethod.POST, RequestMethod.GET})
-    private Map<String, Object> deleteLines(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        String ids = request.getParameter("ids");
-        if (!StringUtils.isEmpty(ids)) {
-            throw new RuntimeException("参数错误");
-        }
-        String[] idss = ids.split(",");
-
-//        userService.deleteUser();
-        return retData(null);
-    }
 }

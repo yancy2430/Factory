@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
+
+
     @Transactional //事务控制 需要抛出runtime异常
     @Override
     public boolean addUser(User user) {
@@ -69,27 +71,10 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException("删除失败！请重试");
         }
     }
-    /**
-     * 批量删除用户
-     * @param userId
-     * @return
-     */
-    @Transactional //事务控制
-    @Override
-    public boolean deleteUser(User user) {
 
-        if (user>0){
-            User user = new User();
-            user.setStatus(2);
-            int i = userMapper.updateUser(user);
-            if (i>0){
-                return true;
-            }else {
-                throw new RuntimeException("删除失败！请重试");
-            }
-        }else {
-            throw new RuntimeException("删除失败！请重试");
-        }
+    @Override
+    public boolean deleteUsers(User user) {
+        return false;
     }
 
     @Override
