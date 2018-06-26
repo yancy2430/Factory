@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
 
 
-
     @Transactional //事务控制 需要抛出runtime异常
     @Override
     public boolean addUser(User user) {

@@ -49,6 +49,7 @@ public class CookieUtils {
         // 新建cookie 客户浏览器端保存当前用户的id
 // key-value格式 key-loginuser value-当前用户的id
         Cookie cookie = new Cookie(key, value);
+        cookie.setPath("/");
 // 设置客户端cookie
         response.addCookie(cookie);
     }

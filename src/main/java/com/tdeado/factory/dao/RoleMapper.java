@@ -8,6 +8,5 @@ import com.tdeado.factory.dao.base.RoleBaseMapper;
 *  @author 
 */
 public interface RoleMapper extends RoleBaseMapper{
-
-
+    int deleteById(int id);
 }

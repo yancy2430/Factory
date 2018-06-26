@@ -12,6 +12,12 @@ public class Role implements Serializable {
 
     private static final long serialVersionUID = 1524998353236L;
 
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Role() {
+    }
 
     /**
     * 主键
